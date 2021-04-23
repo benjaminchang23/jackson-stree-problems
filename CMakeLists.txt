@@ -12,3 +12,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 add_executable(codeforce-279-b codeforce-279-b.cc)
 
 install(TARGETS codeforce-279-b RUNTIME DESTINATION bin)
+
+add_subdirectory(effective-modern-cpp)
