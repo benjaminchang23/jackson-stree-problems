@@ -18,8 +18,8 @@ T FixedMultiply(T num)
     return num * I;
 }
 
-int main () {
-
+int main ()
+{
     int i = 5;
     int j = 10;
     double a = 5.0;

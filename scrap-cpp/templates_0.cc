@@ -10,11 +10,13 @@ template <class type> ret-type func-name(parameter list) {
 using namespace std;
 
 template <typename T>
-inline T const& Max(T const &a, T const &b) { 
+inline T const& Max(T const &a, T const &b)
+{ 
    return a < b ? b:a; 
 }
 
-int main () {
+int main ()
+{
    int i = 39;
    int j = 20;
    cout << "Max(i, j): " << Max(i, j) << endl; 
