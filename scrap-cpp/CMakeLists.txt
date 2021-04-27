@@ -6,7 +6,10 @@ add_executable(templates_0 templates_0.cc)
 add_executable(templates_1 templates_1.cc)
 add_executable(templates_2 templates_2.cc)
 
+add_executable(CAT_0 CAT_0.cc)
+
 install(TARGETS
+    CAT_0
     move_0
     move_1
     move_2
