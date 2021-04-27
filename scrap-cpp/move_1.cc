@@ -32,8 +32,9 @@ public:
 
     // move semantics means you can't use const, which will force a copy
     Base(Base &&rhs)
+        : vec_(std::move(rhs.vec_))
     {
-        *this = std::move(rhs);
+        std::cout << "moved" << std::endl;
     }
 
     void PrintContents()
