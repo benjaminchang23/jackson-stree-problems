@@ -10,6 +10,7 @@ public:
     {
     }
 
+    // atomic has a deleted copy constructor, which means we have to make one of our own
     AtomicWidget(const AtomicWidget &widget) :
         done_(bool(widget.done_))
     {
@@ -35,12 +36,6 @@ public:
     Widget(bool done) :
         done_(done)
     {
-    }
-
-    Widget(const Widget &widget) :
-        done_(widget.done_)
-    {
-
     }
 
     bool GetDone()
