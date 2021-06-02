@@ -15,4 +15,4 @@ install(TARGETS codeforce-279-b RUNTIME DESTINATION bin)
 
 add_subdirectory(effective-modern-cpp)
 add_subdirectory(interview-questions)
-add_subdirectory(scrap-cpp)
+add_subdirectory(prac-cpp)
