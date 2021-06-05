@@ -4,17 +4,18 @@ project(Parsers VERSION 0.1 LANGUAGES C CXX)
 
 set(BUILD_SHARED_LIBS ON)
 
-add_compile_options(-Wall -Wextra -Werror)
+# add_compile_options(
+# $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:SOURCE_DIR>,${PROJECT_SOURCE_DIR}/ext>>:-Wall>
+# $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:SOURCE_DIR>,${PROJECT_SOURCE_DIR}/ext>>:-Wextra>
+# $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:SOURCE_DIR>,${PROJECT_SOURCE_DIR}/ext>>:-Werror>
+# )
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-add_executable(codeforce-279-b codeforce-279-b.cc)
-
-install(TARGETS codeforce-279-b RUNTIME DESTINATION bin)
-
 add_subdirectory(ext)
 
+add_subdirectory(codeforce)
 add_subdirectory(dear-imgui)
 add_subdirectory(effective-modern-cpp)
 add_subdirectory(interview-questions)
