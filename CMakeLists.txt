@@ -4,11 +4,7 @@ project(Parsers VERSION 0.1 LANGUAGES C CXX)
 
 set(BUILD_SHARED_LIBS ON)
 
-# add_compile_options(
-# $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:SOURCE_DIR>,${PROJECT_SOURCE_DIR}/ext>>:-Wall>
-# $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:SOURCE_DIR>,${PROJECT_SOURCE_DIR}/ext>>:-Wextra>
-# $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:SOURCE_DIR>,${PROJECT_SOURCE_DIR}/ext>>:-Werror>
-# )
+add_compile_options(-Wall -Wextra -Werror)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
