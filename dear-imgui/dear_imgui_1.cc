@@ -47,6 +47,15 @@ using namespace gl;
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
+// Enforce cdecl calling convention for functions called by the standard library, in case compilation settings changed the default to e.g. __vectorcall
+#ifndef IMGUI_CDECL
+#ifdef _MSC_VER
+#define IMGUI_CDECL __cdecl
+#else
+#define IMGUI_CDECL
+#endif
+#endif
+
 static void ShowAppMainMenuBar();
 static void ShowWindowTables();
 
@@ -176,6 +185,12 @@ int main(int, char**)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+
+        // We specify a default position/size in case there's no data in the .ini file.
+        // We only do it to make the demo applications a little more welcoming, but typically this isn't required.
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos);
+        ImGui::SetNextWindowSize(viewport->WorkSize);
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         // Main body of the Demo window starts here.
