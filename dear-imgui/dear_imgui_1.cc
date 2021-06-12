@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <iostream>
+
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 // About Desktop OpenGL function loaders:
@@ -56,7 +58,8 @@ using namespace gl;
 #endif
 #endif
 
-static void ShowAppMainMenuBar();
+// Forward Declarations
+static void ShowTextInputWindow(bool* p_open);
 static void ShowRefreshAndSearch();
 static void ShowFirstTable();
 static void ShowSecondTable();
@@ -190,12 +193,14 @@ int main(int, char**)
 
         // We specify a default position/size in case there's no data in the .ini file.
         // We only do it to make the demo applications a little more welcoming, but typically this isn't required.
-        const ImGuiViewport* viewport = ImGui::GetMainViewport();
-        ImGui::SetNextWindowPos(viewport->WorkPos);
-        ImGui::SetNextWindowSize(viewport->WorkSize);
+        const ImGuiViewport* main_viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(main_viewport->WorkPos);
+        ImGui::SetNextWindowSize(main_viewport->WorkSize);
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        // Main body of the Demo window starts here.
+        static bool show_text_input_window = false;
+        static bool show_app_metrics = false;
+        static bool show_app_about = false;
+
         if (!ImGui::Begin("Dear ImGui 1"))
         {
             // Early out if the window is collapsed, as an optimization.
@@ -203,10 +208,46 @@ int main(int, char**)
             return 0;
         }
 
+        if (show_text_input_window)
+        {
+            ShowTextInputWindow(&show_text_input_window);
+        }
+        if (show_app_metrics)
+        {
+            ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x + 650, main_viewport->WorkPos.y + 20), ImGuiCond_FirstUseEver);
+            ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
+            ImGui::ShowMetricsWindow(&show_app_metrics);
+        }
+        if (show_app_about)
+        {
+            ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x + 650, main_viewport->WorkPos.y + 20), ImGuiCond_FirstUseEver);
+            ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
+            ImGui::ShowAboutWindow(&show_app_about);
+        }
+
         // e.g. Leave a fixed amount of width for labels (by passing a negative value), the rest goes to widgets.
         ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
 
-        ShowAppMainMenuBar();
+        if (ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                ImGui::MenuItem("Set copy location", "CTRL+L", &show_text_input_window);
+                if (ImGui::MenuItem("Quit", "CTRL+Q"))
+                {
+                    glfwSetWindowShouldClose(window, 1);
+                }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Tools"))
+            {
+                ImGui::MenuItem("Metrics/Debugger", "CTRL+M", &show_app_metrics);
+                ImGui::MenuItem("About Dear ImGui", NULL, &show_app_about);
+                ImGui::EndMenu();
+            }
+            ImGui::EndMainMenuBar();
+        }
+
         ShowRefreshAndSearch();
         ImGui::Spacing();
         ShowFirstTable();
@@ -237,28 +278,6 @@ int main(int, char**)
     glfwTerminate();
 
     return 0;
-}
-
-static void ShowAppMainMenuBar()
-{
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Edit"))
-        {
-            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-            if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-            ImGui::Separator();
-            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
-            ImGui::EndMenu();
-        }
-        ImGui::EndMainMenuBar();
-    }
 }
 
 // Dummy data structure that we use for the Table demo.
@@ -336,6 +355,66 @@ static void PushStyleCompact()
 static void PopStyleCompact()
 {
     ImGui::PopStyleVar(2);
+}
+
+static void ShowTextInputWindow(bool* p_open)
+{
+    ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiCond_FirstUseEver);
+    if (ImGui::Begin("Set Copy Location", p_open, ImGuiWindowFlags_MenuBar))
+    {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Close")) *p_open = false;
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+
+        // Left
+        static int selected = 0;
+        {
+            ImGui::BeginChild("left pane", ImVec2(150, 0), true);
+            for (int i = 0; i < 100; i++)
+            {
+                char label[128];
+                sprintf(label, "MyObject %d", i);
+                if (ImGui::Selectable(label, selected == i))
+                    selected = i;
+            }
+            ImGui::EndChild();
+        }
+        ImGui::SameLine();
+
+        // Right
+        {
+            ImGui::BeginGroup();
+            ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
+            ImGui::Text("MyObject: %d", selected);
+            ImGui::Separator();
+            if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None))
+            {
+                if (ImGui::BeginTabItem("Description"))
+                {
+                    ImGui::TextWrapped("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Details"))
+                {
+                    ImGui::Text("ID: 0123456789");
+                    ImGui::EndTabItem();
+                }
+                ImGui::EndTabBar();
+            }
+            ImGui::EndChild();
+            if (ImGui::Button("Revert")) {}
+            ImGui::SameLine();
+            if (ImGui::Button("Save")) {}
+            ImGui::EndGroup();
+        }
+    }
+    ImGui::End();
 }
 
 static void ShowRefreshAndSearch()
