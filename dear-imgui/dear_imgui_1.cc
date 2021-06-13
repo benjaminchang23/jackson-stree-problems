@@ -63,6 +63,7 @@ static void ShowTextInputWindow(bool* p_open);
 static void ShowRefreshAndSearch();
 static void ShowFirstTable();
 static void ShowSecondTable();
+static void ShowLog();
 
 static void HelpMarker(const char* desc)
 {
@@ -214,13 +215,11 @@ int main(int, char**)
         }
         if (show_app_metrics)
         {
-            ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x + 650, main_viewport->WorkPos.y + 20), ImGuiCond_FirstUseEver);
             ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
             ImGui::ShowMetricsWindow(&show_app_metrics);
         }
         if (show_app_about)
         {
-            ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x + 650, main_viewport->WorkPos.y + 20), ImGuiCond_FirstUseEver);
             ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
             ImGui::ShowAboutWindow(&show_app_about);
         }
@@ -253,6 +252,8 @@ int main(int, char**)
         ShowFirstTable();
         ImGui::Spacing();
         ShowSecondTable();
+        ImGui::Spacing();
+        ShowLog();
 
         ImGui::PopItemWidth();
         ImGui::End();
@@ -372,46 +373,14 @@ static void ShowTextInputWindow(bool* p_open)
             ImGui::EndMenuBar();
         }
 
-        // Left
-        static int selected = 0;
+        static char buf1[64] = "/mnt/output/";
+        static char buf2[64] = "";
+        ImGui::Text("Current Copy Location: %s", buf1);
+        ImGui::InputText("Copy Location", buf2, 64);
+        if (ImGui::Button("Save"))
         {
-            ImGui::BeginChild("left pane", ImVec2(150, 0), true);
-            for (int i = 0; i < 100; i++)
-            {
-                char label[128];
-                sprintf(label, "MyObject %d", i);
-                if (ImGui::Selectable(label, selected == i))
-                    selected = i;
-            }
-            ImGui::EndChild();
-        }
-        ImGui::SameLine();
-
-        // Right
-        {
-            ImGui::BeginGroup();
-            ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
-            ImGui::Text("MyObject: %d", selected);
-            ImGui::Separator();
-            if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None))
-            {
-                if (ImGui::BeginTabItem("Description"))
-                {
-                    ImGui::TextWrapped("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
-                    ImGui::EndTabItem();
-                }
-                if (ImGui::BeginTabItem("Details"))
-                {
-                    ImGui::Text("ID: 0123456789");
-                    ImGui::EndTabItem();
-                }
-                ImGui::EndTabBar();
-            }
-            ImGui::EndChild();
-            if (ImGui::Button("Revert")) {}
-            ImGui::SameLine();
-            if (ImGui::Button("Save")) {}
-            ImGui::EndGroup();
+            // save copy location
+            snprintf(buf1, 64, "%s", buf2);
         }
     }
     ImGui::End();
@@ -478,8 +447,7 @@ static void ShowFirstTable()
         | ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_NoBordersInBody
         | ImGuiTableFlags_ScrollY;
     PushStyleCompact();
-    ImGui::SameLine(); HelpMarker("When sorting is enabled: hold shift when clicking headers to sort on multiple column. TableGetSortSpecs() may return specs where (SpecsCount > 1).");
-    ImGui::SameLine(); HelpMarker("When sorting is enabled: allow no sorting, disable default sorting. TableGetSortSpecs() may return specs where (SpecsCount == 0).");
+    ImGui::SameLine(); HelpMarker("When sorting is enabled: hold shift when clicking headers to sort on multiple column. ");
     PopStyleCompact();
 
     ImGui::Text("First Table");
@@ -617,6 +585,127 @@ static void ShowSecondTable()
                 }
             ImGui::EndTable();
         }
+        ImGui::TreePop();
+    }
+}
+
+// Usage:
+//  static ExampleAppLog my_log;
+//  my_log.AddLog("Hello %d world\n", 123);
+//  my_log.Draw("title");
+struct ExampleAppLog
+{
+    ImGuiTextBuffer     Buf;
+    ImGuiTextFilter     Filter;
+    ImVector<int>       LineOffsets; // Index to lines offset. We maintain this with AddLog() calls.
+    bool                AutoScroll;  // Keep scrolling if already at the bottom.
+
+    ExampleAppLog()
+    {
+        AutoScroll = true;
+        Clear();
+    }
+
+    void    Clear()
+    {
+        Buf.clear();
+        LineOffsets.clear();
+        LineOffsets.push_back(0);
+    }
+
+    void    AddLog(const char* fmt, ...) IM_FMTARGS(2)
+    {
+        int old_size = Buf.size();
+        va_list args;
+        va_start(args, fmt);
+        Buf.appendfv(fmt, args);
+        va_end(args);
+        for (int new_size = Buf.size(); old_size < new_size; old_size++)
+            if (Buf[old_size] == '\n')
+                LineOffsets.push_back(old_size + 1);
+    }
+
+    void    Draw(bool* p_open = NULL)
+    {
+        bool clear = ImGui::Button("Clear");
+        ImGui::SameLine();
+        bool copy = ImGui::Button("Copy");
+        ImGui::SameLine();
+        Filter.Draw("Filter", -100.0f);
+
+        ImGui::Separator();
+        ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetFontSize() * 20.0f), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+        if (clear)
+            Clear();
+        if (copy)
+            ImGui::LogToClipboard();
+
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+        const char* buf = Buf.begin();
+        const char* buf_end = Buf.end();
+        if (Filter.IsActive())
+        {
+            // In this example we don't use the clipper when Filter is enabled.
+            // This is because we don't have a random access on the result on our filter.
+            // A real application processing logs with ten of thousands of entries may want to store the result of
+            // search/filter.. especially if the filtering function is not trivial (e.g. reg-exp).
+            for (int line_no = 0; line_no < LineOffsets.Size; line_no++)
+            {
+                const char* line_start = buf + LineOffsets[line_no];
+                const char* line_end = (line_no + 1 < LineOffsets.Size) ? (buf + LineOffsets[line_no + 1] - 1) : buf_end;
+                if (Filter.PassFilter(line_start, line_end))
+                    ImGui::TextUnformatted(line_start, line_end);
+            }
+        }
+        else
+        {
+            // The simplest and easy way to display the entire buffer:
+            //   ImGui::TextUnformatted(buf_begin, buf_end);
+            // And it'll just work. TextUnformatted() has specialization for large blob of text and will fast-forward
+            // to skip non-visible lines. Here we instead demonstrate using the clipper to only process lines that are
+            // within the visible area.
+            // If you have tens of thousands of items and their processing cost is non-negligible, coarse clipping them
+            // on your side is recommended. Using ImGuiListClipper requires
+            // - A) random access into your data
+            // - B) items all being the  same height,
+            // both of which we can handle since we an array pointing to the beginning of each line of text.
+            // When using the filter (in the block of code above) we don't have random access into the data to display
+            // anymore, which is why we don't use the clipper. Storing or skimming through the search result would make
+            // it possible (and would be recommended if you want to search through tens of thousands of entries).
+            ImGuiListClipper clipper;
+            clipper.Begin(LineOffsets.Size);
+            while (clipper.Step())
+            {
+                for (int line_no = clipper.DisplayStart; line_no < clipper.DisplayEnd; line_no++)
+                {
+                    const char* line_start = buf + LineOffsets[line_no];
+                    const char* line_end = (line_no + 1 < LineOffsets.Size) ? (buf + LineOffsets[line_no + 1] - 1) : buf_end;
+                    ImGui::TextUnformatted(line_start, line_end);
+                }
+            }
+            clipper.End();
+        }
+        ImGui::PopStyleVar();
+
+        if (AutoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+            ImGui::SetScrollHereY(1.0f);
+
+        ImGui::EndChild();
+    }
+};
+
+static void ShowLog()
+{
+    if (ImGui::TreeNode("Log"))
+    {
+        static ExampleAppLog log;
+
+        log.AddLog("[%05d] [%s] Hello, current time is %.1f, here's a word: '%s'\n",
+            ImGui::GetFrameCount(), "hello", ImGui::GetTime(), "world");
+
+        log.Draw();
+
         ImGui::TreePop();
     }
 }
