@@ -28,6 +28,8 @@ inline bool operator == (const container &left, const container &right)
 
 inline bool operator < (const container &left, const container &right)
 {
+    if (left.a == right.a)
+        return left.b < right.b;
     return left.a < right.a;
 }
 
@@ -53,6 +55,7 @@ int main()
     vec.emplace_back(con_0);
     vec.emplace_back(con_1);
     vec.emplace_back(con_2);
+    vec.emplace_back(con_3);
 
     std::sort(vec.begin(), vec.end());
 
