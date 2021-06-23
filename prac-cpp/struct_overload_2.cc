@@ -41,7 +41,25 @@ inline std::ostream& operator << (std::ostream &o, const container &con)
     return o;
 }
 
+struct compare_struct
+{
+    bool a_first = true;
 
+    bool operator() (const container &left, const container &right)
+    {
+
+        if (a_first)
+        {
+            if (left.a == right.a)
+                return left.b < right.b;
+            return left.a < right.a;
+        }
+
+        if (left.b == right.b)
+            return left.a < right.a;
+        return left.b < right.b;
+    }
+};
 
 int main()
 {
@@ -57,7 +75,10 @@ int main()
     vec.emplace_back(con_2);
     vec.emplace_back(con_3);
 
-    std::sort(vec.begin(), vec.end());
+    compare_struct compare;
+    compare.a_first = false;
+
+    std::sort(vec.begin(), vec.end(), compare);
 
     for (const auto & con : vec)
     {
