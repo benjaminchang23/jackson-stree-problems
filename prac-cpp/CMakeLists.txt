@@ -1,5 +1,6 @@
 add_executable(copy_ctor_0 copy_ctor_0.cc)
 add_executable(copy_ctor_1 copy_ctor_1.cc)
+add_executable(function_order_0 function_order_0.cc)
 add_executable(map_address_0 map_address_0.cc)
 add_executable(move_0 move_0.cc)
 add_executable(move_1 move_1.cc)
@@ -17,6 +18,7 @@ add_executable(time_0 time_0.cc)
 install(TARGETS
     copy_ctor_0
     copy_ctor_1
+    function_order_0
     map_address_0
     move_0
     move_1
