@@ -6,6 +6,7 @@ add_executable(move_0 move_0.cc)
 add_executable(move_1 move_1.cc)
 add_executable(move_2 move_2.cc)
 add_executable(move_3 move_3.cc)
+add_executable(strings_0 strings_0.cc)
 add_executable(struct_overload_0 struct_overload_0.cc)
 add_executable(struct_overload_1 struct_overload_1.cc)
 add_executable(struct_overload_2 struct_overload_2.cc)
@@ -24,6 +25,7 @@ install(TARGETS
     move_1
     move_2
     move_3
+    strings_0
     struct_overload_0
     struct_overload_1
     struct_overload_2
