@@ -1,4 +1,8 @@
 include(GNUInstallDirs)
+
+set(SPDLOG_BUILD_SHARED ON)
+set(SPDLOG_INSTALL ON)
+
 add_subdirectory(spdlog)
 
 # set root to be expected imgui location
