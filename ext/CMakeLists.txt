@@ -1,4 +1,5 @@
 include(GNUInstallDirs)
+add_subdirectory(spdlog)
 
 # set root to be expected imgui location
 set(imgui_root ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
