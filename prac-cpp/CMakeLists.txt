@@ -15,6 +15,7 @@ add_executable(templates_0 templates_0.cc)
 add_executable(templates_1 templates_1.cc)
 add_executable(templates_2 templates_2.cc)
 add_executable(time_0 time_0.cc)
+add_executable(unicode_0 unicode_0.cc)
 
 install(TARGETS
     copy_ctor_0
@@ -34,5 +35,6 @@ install(TARGETS
     templates_1
     templates_2
     time_0
+    unicode_0
     RUNTIME DESTINATION bin
     )
