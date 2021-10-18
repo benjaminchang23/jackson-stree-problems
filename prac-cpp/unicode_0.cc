@@ -1,7 +1,9 @@
 #include <ctype.h>
-#include <iostream>
 #include <stdlib.h>
 #include <string.h>
+
+#include <algorithm>
+#include <iostream>
 
 void urldecode(char *dst, const char *src)
 {
@@ -46,6 +48,19 @@ int main()
     urldecode(output, input);
 
     std::cout << "output: " << output << std::endl;
+
+    std::string input_str = std::string(output);
+    const std::string remove_str = "’";
+
+    std::cout << "input_str: " << input_str << std::endl;
+    std::cout << "remove_str: " << remove_str << std::endl;
+
+    const auto pos = input_str.find(remove_str);
+
+    if (pos != std::string::npos)
+        input_str.erase(pos, remove_str.length());
+
+    std::cout << "input_str: " << input_str << std::endl;
 
     return 0;
 }

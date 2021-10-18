@@ -1,6 +1,11 @@
+set(OPENSSL_USE_STATIC_LIBS TRUE)
+find_package(OpenSSL REQUIRED)
+
 add_executable(copy_ctor_0 copy_ctor_0.cc)
 add_executable(copy_ctor_1 copy_ctor_1.cc)
 add_executable(function_order_0 function_order_0.cc)
+add_executable(hash_gen_0 hash_gen_0.cc)
+add_executable(hash_gen_1 hash_gen_1.cc)
 add_executable(map_address_0 map_address_0.cc)
 add_executable(move_0 move_0.cc)
 add_executable(move_1 move_1.cc)
@@ -17,10 +22,15 @@ add_executable(templates_2 templates_2.cc)
 add_executable(time_0 time_0.cc)
 add_executable(unicode_0 unicode_0.cc)
 
+target_link_libraries(hash_gen_0 OpenSSL::SSL)
+target_link_libraries(hash_gen_1 OpenSSL::SSL)
+
 install(TARGETS
     copy_ctor_0
     copy_ctor_1
     function_order_0
+    hash_gen_0
+    hash_gen_1
     map_address_0
     move_0
     move_1
