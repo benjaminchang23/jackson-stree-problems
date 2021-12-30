@@ -1,10 +1,15 @@
 include(GNUInstallDirs)
 
+# nlohmann json
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(json)
+
+# spdlog
+add_subdirectory(spdlog)
 set(SPDLOG_BUILD_SHARED ON)
 set(SPDLOG_INSTALL ON)
 
-add_subdirectory(spdlog)
-
+# imgui
 # set root to be expected imgui location
 set(imgui_root ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
 set(imgui_backends ${imgui_root}/backends)

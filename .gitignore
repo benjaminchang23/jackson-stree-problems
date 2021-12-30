@@ -37,3 +37,12 @@ install
 
 # IDE
 .vscode
+
+# ImGUI
+imgui.ini
+
+# json
+pretty.json
+
+# spdlog
+logs
