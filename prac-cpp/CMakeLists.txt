@@ -1,50 +1,48 @@
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
-add_executable(copy_ctor_0 copy_ctor_0.cc)
-add_executable(copy_ctor_1 copy_ctor_1.cc)
-add_executable(function_order_0 function_order_0.cc)
-add_executable(hash_gen_0 hash_gen_0.cc)
-add_executable(hash_gen_1 hash_gen_1.cc)
-add_executable(map_address_0 map_address_0.cc)
-add_executable(move_0 move_0.cc)
-add_executable(move_1 move_1.cc)
-add_executable(move_2 move_2.cc)
-add_executable(move_3 move_3.cc)
-add_executable(strings_0 strings_0.cc)
-add_executable(struct_overload_0 struct_overload_0.cc)
-add_executable(struct_overload_1 struct_overload_1.cc)
-add_executable(struct_overload_2 struct_overload_2.cc)
-add_executable(struct_overload_3 struct_overload_3.cc)
-add_executable(templates_0 templates_0.cc)
-add_executable(templates_1 templates_1.cc)
-add_executable(templates_2 templates_2.cc)
-add_executable(time_0 time_0.cc)
-add_executable(unicode_0 unicode_0.cc)
+set(SOURCES_LIST
+    char_print_0.cc
+    char_print_1.cc
+    copy_ctor_0.cc
+    copy_ctor_1.cc
+    for_loop_0.cc
+    function_order_0.cc
+    hash_gen_0.cc
+    hash_gen_1.cc
+    map_address_0.cc
+    move_0.cc
+    move_1.cc
+    move_2.cc
+    move_3.cc
+    pragma_push_pop_0.cc
+    printable_0.cc
+    strings_0.cc
+    struct_overload_0.cc
+    struct_overload_1.cc
+    struct_overload_2.cc
+    struct_overload_3.cc
+    templates_0.cc
+    templates_1.cc
+    templates_2.cc
+    templates_3.cc
+    time_0.cc
+    unicode_0.cc
+)
+
+string( REPLACE ".cc" "" BASENAMES_LIST "${SOURCES_LIST}" )
+set( TARGETS_LIST ${BASENAMES_LIST} )
+    
+foreach( name ${TARGETS_LIST} )
+    add_executable( ${name} ${name}.cc )
+endforeach()
 
 target_link_libraries(hash_gen_0 OpenSSL::SSL)
 target_link_libraries(hash_gen_1 OpenSSL::SSL)
 
-install(TARGETS
-    copy_ctor_0
-    copy_ctor_1
-    function_order_0
-    hash_gen_0
-    hash_gen_1
-    map_address_0
-    move_0
-    move_1
-    move_2
-    move_3
-    strings_0
-    struct_overload_0
-    struct_overload_1
-    struct_overload_2
-    struct_overload_3
-    templates_0
-    templates_1
-    templates_2
-    time_0
-    unicode_0
-    RUNTIME DESTINATION bin
+foreach( name ${TARGETS_LIST} )
+    install(TARGETS
+        ${name}
+        RUNTIME DESTINATION bin
     )
+endforeach()

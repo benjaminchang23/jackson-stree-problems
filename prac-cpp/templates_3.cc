@@ -1,3 +1,5 @@
+#include <iostream>
+
 template <typename X, typename Y>
 int Multiply(X x, Y y)
 {
@@ -6,5 +8,8 @@ int Multiply(X x, Y y)
 
 int main()
 {
-    Multiply(1, 2);
+    std::cout << Multiply(11, 2) << std::endl;
+    std::cout << Multiply(3, 20) << std::endl;
+
+    return 0;
 }

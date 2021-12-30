@@ -23,21 +23,25 @@ void print_md5_sum(unsigned char* md)
 }
 
 // Get the size of the file by its file descriptor
-unsigned long get_size_by_fd(int fd) {
+unsigned long get_size_by_fd(int fd)
+{
     struct stat statbuf;
     if(fstat(fd, &statbuf) < 0) exit(-1);
     return statbuf.st_size;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     int file_descript;
     unsigned long file_size;
     void* file_buffer;
 
-    if(argc != 2) { 
-            printf("Must specify the file\n");
-            exit(-1);
+    if (argc != 2)
+    { 
+        printf("Must specify the file\n");
+        exit(-1);
     }
+
     printf("using file:\t%s\n", argv[1]);
 
     file_descript = open(argv[1], O_RDONLY);
