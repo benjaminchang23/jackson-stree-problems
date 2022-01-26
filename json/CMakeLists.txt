@@ -3,6 +3,7 @@ set(SOURCES_LIST
     json_0.cc
     json_1.cc
     json_2.cc
+    json_3.cc
 )
 
 string( REPLACE ".cc" "" BASENAMES_LIST "${SOURCES_LIST}" )
