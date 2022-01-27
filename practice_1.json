@@ -3,6 +3,7 @@
         "binder_debug_log": true,
         "cli_debug_log": true,
         "db_debug_log": false,
+        "db_init_new": false,
         "db_path": "/mnt/black-library/db/catalog.db",
         "db_remote": false,
         "factory_debug_log": false,
