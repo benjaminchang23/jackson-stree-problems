@@ -4,12 +4,15 @@ find_package(OpenSSL REQUIRED)
 set(SOURCES_LIST
     char_print_0.cc
     char_print_1.cc
+    chrono_0.cc
     copy_ctor_0.cc
     copy_ctor_1.cc
     for_loop_0.cc
     function_order_0.cc
     hash_gen_0.cc
     hash_gen_1.cc
+    lambda_0.cc
+    lambda_1.cc
     map_address_0.cc
     move_0.cc
     move_1.cc

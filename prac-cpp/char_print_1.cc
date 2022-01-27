@@ -11,7 +11,7 @@ struct char_cont
 
 inline std::ostream& operator << (std::ostream &o, const char_cont &con)
 {
-    o << std::string(con.data_0) << ",";
+    o << std::string(con.data_0) << " ";
     o << con.data_1;
     return o;
 }
