@@ -1,5 +1,7 @@
 #include <chrono>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <thread>
 
 int main()
@@ -18,8 +20,13 @@ int main()
 
         if ((freq-now_time).count() < 0)
         {
+            std::stringstream str;
             std::cout << "run timed widget" << std::endl;
             freq = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+            auto next_time = std::chrono::system_clock::now() + std::chrono::seconds(5);
+            auto time = std::chrono::system_clock::to_time_t(next_time);
+            str << std::put_time(std::gmtime(&time), "%FT%TZ") << std::ends;
+            std::cout << "next run at " << str.str() << std::endl;
         }
 
         ++seconds_counter;
