@@ -14,11 +14,14 @@ set(SOURCES_LIST
     lambda_0.cc
     lambda_1.cc
     map_address_0.cc
+    memcpy_0.cc
     move_0.cc
     move_1.cc
     move_2.cc
     move_3.cc
     pragma_push_pop_0.cc
+    pointer_0.cc
+    pointer_1.cc
     printable_0.cc
     strings_0.cc
     struct_overload_0.cc
