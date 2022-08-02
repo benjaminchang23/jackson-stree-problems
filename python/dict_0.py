@@ -28,3 +28,12 @@ for data_frame in data_frames:
     data_dict["attr"] = data_frame["ele_attr"]
     json_str = json.dumps(data_dict)
     print(json_str)
+
+simple_list = ["one", "two"]
+simple_dict = {}
+
+for element in simple_list:
+    simple_dict[element] = {}
+    simple_dict[element][2] = 1
+
+print(simple_dict)
