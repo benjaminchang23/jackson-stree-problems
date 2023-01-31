@@ -18,9 +18,13 @@ file_list.append("s3://foo-bar/Unpacked/TestCustom/TestLoc/2021.06/2021.06.09/RD
 file_list.append("s3://foo-bar/Unpacked/TestCustom/TestLoc/2022.07/2022.07.18/Name/base1/extracted/channel2/123456789.00_2022.png")
 file_list.append("s3://foo-bar/Unpacked/TestCustom/TestLoc/2022.07/2022.07.18/Name/base1/extracted/channel2/123456789.00_2022.png")
 file_list.append("s3://foo-bar/grob/Unpacked/TestCustom/TestLoc/2022.07/2022.07.18/Name/base1/extracted/channel2/123456789.00_2022.png")
+file_list.append("s3://foo-bar/grob/Unpacked/TestCustom/TestLoc/2022.07/2022.07.18/Name/base1/ExtractedData/channel2/123456789.00_2022.png")
+file_list.append("s3://foo-bar/grob/Unpacked/TestCustom/TestLoc/2022.07/2022.07.18/Name/base1/Snippets/snippetname1/ExtractedData/channel2/123456789.00_2022.png")
+file_list.append("s3://foo-bar/grob/Unpacked/TestCustom/TestLoc/2022.07/2022.07.18/Name/base1/Snippets/snippetname1/extracted/channel2/123456789.00_2022.png")
+
 
 for file_path in file_list:
-    print("Processing: {}".format(file_path))
+    print("Channel extract: {}".format(file_path))
     try:
         # https://www3.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html
         # https://linuxhint.com/extract-substring-regex-python/
@@ -29,8 +33,7 @@ for file_path in file_list:
                                "[a-zA-Z0-9_.%\-~/:]+/"
                                "[0-9]{4}\.[0-9]{2}/"
                                "[0-9]{4}\.[0-9]{2}\.[0-9]{2}/"
-                               "[a-zA-Z0-9_.%\-~]+/"
-                               "[a-zA-Z0-9_.%\-~]+/"
+                               "[a-zA-Z0-9_.%\-~/]+/"
                                "(ExtractedData|extracted)/"
                                "([a-zA-Z0-9_.%\-~]+)", file_path)
         found = None

@@ -5,5 +5,5 @@ myset.add("one")
 
 print(myset)
 
-for word in set:
+for word in myset:
     print(word)
