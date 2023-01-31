@@ -2,11 +2,13 @@ set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
 set(SOURCES_LIST
+    bool_print_0.cc
     char_print_0.cc
     char_print_1.cc
     chrono_0.cc
     copy_ctor_0.cc
     copy_ctor_1.cc
+    enum_class_0.cc
     for_loop_0.cc
     function_order_0.cc
     hash_gen_0.cc

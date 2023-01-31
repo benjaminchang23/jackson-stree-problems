@@ -52,12 +52,12 @@ Base Foo()
     return base;
 }
 
-Base FooButWorse()
-{
-    Base base(std::vector<int>({2, 4, 6, 8}));
-    base.PrintContents();
-    return std::move(base);
-}
+// Base FooButWorse()
+// {
+//     Base base(std::vector<int>({2, 4, 6, 8}));
+//     base.PrintContents();
+//     return std::move(base);
+// }
 
 int main()
 {
@@ -65,13 +65,13 @@ int main()
 
     Base base_0 = Base(vec);
     Base base_1 = Foo();
-    Base base_2 = FooButWorse();
+    // Base base_2 = FooButWorse();
 
     std::cout << "After construction, copy or in place" << std::endl;
 
     base_0.PrintContents();
     base_1.PrintContents();
-    base_2.PrintContents();
+    // base_2.PrintContents();
 
     return 0;
 }

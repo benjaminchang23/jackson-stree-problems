@@ -6,7 +6,7 @@
 int main()
 {
     char dest_0[9];
-    char dest_1[9];
+    char dest_1[15];
     const char test_0[] = "test_123456789";
 
     std::cout << "dest_0: " << dest_0 << std::endl;
