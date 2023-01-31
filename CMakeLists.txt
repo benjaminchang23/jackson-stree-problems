@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 add_subdirectory(ext)
 
 add_subdirectory(codeforce)
+# add_subdirectory(cpp-httplib)
 add_subdirectory(dear-imgui)
 add_subdirectory(effective-modern-cpp)
 add_subdirectory(interview-questions)

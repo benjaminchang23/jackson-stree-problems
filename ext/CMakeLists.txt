@@ -1,5 +1,8 @@
 include(GNUInstallDirs)
 
+# cpp-httplib
+add_subdirectory(cpp-httplib)
+
 # nlohmann json
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(json)

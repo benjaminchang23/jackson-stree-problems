@@ -625,7 +625,7 @@ struct ExampleAppLog
                 LineOffsets.push_back(old_size + 1);
     }
 
-    void    Draw(bool* p_open = NULL)
+    void    Draw()
     {
         bool clear = ImGui::Button("Clear");
         ImGui::SameLine();
