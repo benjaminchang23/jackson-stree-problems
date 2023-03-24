@@ -27,3 +27,12 @@ if list_3:
     print("stuff in list")
 else:
     print("nothing in list")
+
+list_4 = [
+    1,
+    2,
+    3,
+    4,
+]
+
+print(list_4)
