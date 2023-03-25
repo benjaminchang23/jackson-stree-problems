@@ -17,7 +17,8 @@ def except_test():
             print(retry_num)
             time.sleep(retry_num)
             if retry_num >= 3:
-                raise Exception("Error occured: {}".format(e))
+                print(e.args)
+                raise
 
 if __name__ == "__main__":
     print("start try except test")
