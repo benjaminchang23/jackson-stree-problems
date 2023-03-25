@@ -17,3 +17,11 @@ list_2 = [
     ]
 
 print(list_2)
+
+list_3 = [
+    key for key in dict_0
+    if key == "two"
+    if key != "one"
+]
+
+print(list_3)
