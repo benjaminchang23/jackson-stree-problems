@@ -8,10 +8,9 @@ def except_test():
         print("Success")
         return task
     except Exception as e:
-        # we don't raise exception here because we want other tasks to be uploaded as well
         print("reached exception")
-        print("error", e)
-        return None
+        print("error", e.args)
+        raise
 
 if __name__ == "__main__":
     print("start try except test")

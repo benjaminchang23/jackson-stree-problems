@@ -42,5 +42,18 @@ if "g" not in dict_1:
 if "b" in dict_1 and dict_1["b"].get("bbbb") is None:
     dict_1["b"]["bbbb"] = ["bbbbb"]
 
+if "t" not in dict_1:
+    dict_1["t"] = {"n": ["g"]}
+
+if "t" in dict_1 and dict_1["t"].get("c") is None:
+    dict_1["t"]["c"] = ["v"]
+
+dict_1["t"]["c"].append("d")
+
+print("elements of dict_1")
 for element in dict_1:
     print("{} - {}".format(element, dict_1[element]))
+
+print("len of dict_1: {}".format(len(dict_1)))
+
+print(dict_1)

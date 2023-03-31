@@ -10,3 +10,18 @@ print(list_0)
 list_1 = [key for key in dict_0 if key == "one"]
 
 print(list_1)
+
+list_2 = [
+        key
+        for key in dict_0
+    ]
+
+print(list_2)
+
+list_3 = [
+    key for key in dict_0
+    if key == "two"
+    if key != "one"
+]
+
+print(list_3)
