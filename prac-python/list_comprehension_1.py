@@ -25,3 +25,7 @@ list_3 = [
 ]
 
 print(list_3)
+
+list_4 = [key for key in dict_0 if (key == "one" or key == "two")]
+
+print(list_4)
