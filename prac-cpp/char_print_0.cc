@@ -10,7 +10,7 @@ int main()
     const char test_0[] = "test_123456789";
 
     std::cout << "dest_0: " << dest_0 << std::endl;
-    strncpy(dest_0, test_0, sizeof(dest_0));
+    // strncpy(dest_0, test_0, sizeof(dest_0));
     printf("dest_0 strncpy printf style: %s\n", dest_0);
     std::cout << "dest_0: " << dest_0 << std::endl;
 
