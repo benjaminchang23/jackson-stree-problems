@@ -36,3 +36,11 @@ list_4 = [
 ]
 
 print(list_4)
+
+list_5 = ["ccc", "bb", "a"]
+print(list_5)
+list_5.sort()
+print(list_5)
+
+for ele in list_5:
+    print(ele)
