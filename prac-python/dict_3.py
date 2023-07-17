@@ -4,9 +4,6 @@ dict_0["top"] = {}
 dict_0["top"]["entry1"] = ["e", "d"]
 dict_0["top"]["entry2"] = ["c", "b"]
 
-
-
-
 dict_0["bottom"] = {}
 dict_0["bottom"]["entry1"] = ["z", "b"]
 dict_0["bottom"]["entry2"] = ["y", "a"]
@@ -15,6 +12,12 @@ list_0 = ["e", "d"]
 list_0.sort()
 
 print(list_0)
+
+print(dict_0)
+
+dict_0 = {}
+
+print(dict_0)
 
 for top_or_bot in dict_0:
     for name in dict_0[top_or_bot]:
