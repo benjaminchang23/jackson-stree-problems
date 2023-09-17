@@ -31,6 +31,11 @@ if e_exists:
 else:
     print("can not use e")
 
+if not dict_1.get("not_exists"):
+    print("not exists")
+else:
+    print("does exists")
+
 if True and dict_1.get("f"):
     print("can use f")
 else:
