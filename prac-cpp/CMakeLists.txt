@@ -25,6 +25,7 @@ set(SOURCES_LIST
     pointer_0.cc
     pointer_1.cc
     printable_0.cc
+    shared_pointer_0.cc
     strings_0.cc
     strings_1.cc
     struct_overload_0.cc
