@@ -26,6 +26,7 @@ set(SOURCES_LIST
     pointer_1.cc
     printable_0.cc
     shared_pointer_0.cc
+    strategy_0.cc
     strings_0.cc
     strings_1.cc
     stringstream_0.cc
