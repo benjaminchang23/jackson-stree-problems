@@ -10,3 +10,6 @@
 [submodule "ext/cpp-httplib"]
 	path = ext/cpp-httplib
 	url = git@github.com:yhirose/cpp-httplib.git
+[submodule "ext/pistache"]
+	path = ext/pistache
+	url = git@github.com:pistacheio/pistache.git

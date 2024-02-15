@@ -7,6 +7,9 @@ add_subdirectory(cpp-httplib)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(json)
 
+# pistache
+add_subdirectory(pistache)
+
 # spdlog
 set(SPDLOG_BUILD_SHARED ON CACHE INTERNAL "Build spdlog shared library")
 set(SPDLOG_INSTALL ON CACHE INTERNAL "Install spdlog")
