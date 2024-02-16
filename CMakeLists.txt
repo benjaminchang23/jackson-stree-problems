@@ -6,7 +6,7 @@ set(BUILD_SHARED_LIBS ON)
 
 add_compile_options(-Wall -Wextra -Werror)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 add_subdirectory(ext)
@@ -18,6 +18,7 @@ add_subdirectory(dear-imgui)
 add_subdirectory(effective-modern-cpp)
 add_subdirectory(interview-questions)
 add_subdirectory(json)
+add_subdirectory(pistache)
 add_subdirectory(prac-cmake)
 add_subdirectory(prac-cpp)
 add_subdirectory(spdlog)

@@ -7,6 +7,10 @@ add_subdirectory(cpp-httplib)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(json)
 
+# oatpp
+# add_subdirectory(oatpp)
+# add_subdirectory(oatpp-example-crud)
+
 # pistache
 add_subdirectory(pistache)
 

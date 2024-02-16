@@ -13,3 +13,9 @@
 [submodule "ext/pistache"]
 	path = ext/pistache
 	url = git@github.com:pistacheio/pistache.git
+[submodule "ext/oatpp"]
+	path = ext/oatpp
+	url = https://github.com/oatpp/oatpp.git
+[submodule "ext/oatpp-example-crud"]
+	path = ext/oatpp-example-crud
+	url = https://github.com/oatpp/example-crud.git
