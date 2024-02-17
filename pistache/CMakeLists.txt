@@ -2,6 +2,7 @@
 
 set(SOURCES_LIST
     testapp_0.cc
+    testapp_1.cc
 )
 
 string( REPLACE ".cc" "" BASENAMES_LIST "${SOURCES_LIST}" )

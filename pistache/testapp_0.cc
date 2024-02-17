@@ -1,3 +1,7 @@
+/*
+based on: https://github.com/LegalizeAdulthood/comicsdb-pistache/blob/master/comicsdb/comicService.cpp
+*/
+
 #include <cstdint>
 #include <memory>
 
@@ -12,7 +16,7 @@ namespace testapp_0 {
 class TestApp
 {
 public:
-    TestApp(uint16_t port_number = 8000, uint16_t num_threads = 4) :
+    TestApp(uint16_t port_number = 8080, uint16_t num_threads = 4) :
         port_number_(port_number),
         num_threads_(num_threads),
         address_("localhost", port_number),
@@ -41,7 +45,6 @@ private:
 
 int TestApp::SetRoutes()
 {
-    Pistache::Rest::Routes::Put(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::CreateEntry, this));
     Pistache::Rest::Routes::Post(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::CreateEntry, this));
     Pistache::Rest::Routes::Get(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::ReadEntry, this));
     Pistache::Rest::Routes::Put(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::UpdateEntry, this));
