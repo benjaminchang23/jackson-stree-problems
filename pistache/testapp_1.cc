@@ -38,13 +38,13 @@ public:
     {
         router.initFromDescription(desc);
 
-        Pistache::Rest::Swagger swagger(desc);
-        swagger
-            .uiPath("/doc")
-            .uiDirectory("/home/octal/code/web/swagger-ui-2.1.4/dist")
-            .apiPath("/banker-api.json")
-            // .serializer(&Pistache::Rest::Serializer::rapidJson)
-            .install(router);
+        // Pistache::Rest::Swagger swagger(desc);
+        // swagger
+        //     .uiPath("/doc")
+        //     .uiDirectory("/home/octal/code/web/swagger-ui-2.1.4/dist")
+        //     .apiPath("/banker-api.json")
+        //     // .serializer(&Pistache::Rest::Serializer::rapidJson)
+        //     .install(router);
 
         httpEndpoint->setHandler(router.handler());
         httpEndpoint->serve();
