@@ -13,6 +13,18 @@ based on: https://github.com/LegalizeAdulthood/comicsdb-pistache/blob/master/com
 
 namespace testapp_0 {
 
+class DiffApp
+{
+public:
+    DiffApp();
+    void Widget();
+};
+
+void DiffApp::Widget()
+{
+    std::cout << "widget" << std::endl;
+}
+
 class TestApp
 {
 public:
@@ -49,6 +61,7 @@ int TestApp::SetRoutes()
     Pistache::Rest::Routes::Get(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::ReadEntry, this));
     Pistache::Rest::Routes::Put(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::UpdateEntry, this));
     Pistache::Rest::Routes::Delete(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::DeleteEntry, this));
+    // Pistache::Rest::Routes::Post(rest_router_, "/widget/:uuid", Pistache::Rest::Routes::bind(&DiffApp::Widget, this));
 
     return 0;
 }
