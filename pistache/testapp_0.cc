@@ -13,16 +13,43 @@ based on: https://github.com/LegalizeAdulthood/comicsdb-pistache/blob/master/com
 
 namespace testapp_0 {
 
+namespace Generic
+{
+
+    void handleReady(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter response)
+    {
+        response.send(Pistache::Http::Code::Ok, "1");
+    }
+
+}
+
 class DiffApp
 {
 public:
-    DiffApp();
-    void Widget();
+    DiffApp()
+    {
+
+    }
+
+    void Widget(const Pistache::Rest::Request &request, Pistache::Http::ResponseWriter response);
 };
 
-void DiffApp::Widget()
+void DiffApp::Widget(const Pistache::Rest::Request &request, Pistache::Http::ResponseWriter response)
 {
-    std::cout << "widget" << std::endl;
+    try
+    {
+        const std::string json = request.body();
+        const std::string resource = request.param(":uuid").as<std::string>();
+        response.send(Pistache::Http::Code::Ok, "work_entry " + resource + " created.", MIME(Text, Plain));
+    }
+    catch (const std::runtime_error &ex)
+    {
+        response.send(Pistache::Http::Code::Not_Found, ex.what(), MIME(Text, Plain));
+    }
+    catch (...)
+    {
+        response.send(Pistache::Http::Code::Internal_Server_Error, "Internal error", MIME(Text, Plain));
+    }
 }
 
 class TestApp
@@ -33,7 +60,8 @@ public:
         num_threads_(num_threads),
         address_("localhost", port_number),
         endpoint_(std::make_shared<Pistache::Http::Endpoint>(address_)),
-        rest_router_()
+        rest_router_(),
+        diff_app_()
     {
     }
 
@@ -53,6 +81,7 @@ private:
     Pistache::Address address_;
     std::shared_ptr<Pistache::Http::Endpoint> endpoint_;
     Pistache::Rest::Router rest_router_;
+    std::shared_ptr<DiffApp> diff_app_;
 };
 
 int TestApp::SetRoutes()
@@ -61,7 +90,8 @@ int TestApp::SetRoutes()
     Pistache::Rest::Routes::Get(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::ReadEntry, this));
     Pistache::Rest::Routes::Put(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::UpdateEntry, this));
     Pistache::Rest::Routes::Delete(rest_router_, "/work_entry/:uuid", Pistache::Rest::Routes::bind(&TestApp::DeleteEntry, this));
-    // Pistache::Rest::Routes::Post(rest_router_, "/widget/:uuid", Pistache::Rest::Routes::bind(&DiffApp::Widget, this));
+    Pistache::Rest::Routes::Post(rest_router_, "/ready", Pistache::Rest::Routes::bind(&Generic::handleReady));
+    Pistache::Rest::Routes::Post(rest_router_, "/widget", Pistache::Rest::Routes::bind(&DiffApp::Widget, diff_app_));
 
     return 0;
 }
