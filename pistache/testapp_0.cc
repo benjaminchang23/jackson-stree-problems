@@ -39,8 +39,7 @@ void DiffApp::Widget(const Pistache::Rest::Request &request, Pistache::Http::Res
     try
     {
         const std::string json = request.body();
-        const std::string resource = request.param(":uuid").as<std::string>();
-        response.send(Pistache::Http::Code::Ok, "work_entry " + resource + " created.", MIME(Text, Plain));
+        response.send(Pistache::Http::Code::Ok, "Widget " + json + " created.", MIME(Text, Plain));
     }
     catch (const std::runtime_error &ex)
     {
