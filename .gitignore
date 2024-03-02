@@ -46,3 +46,6 @@ pretty.json
 
 # spdlog
 logs
+
+# python venv
+venv
