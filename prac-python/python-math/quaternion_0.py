@@ -61,10 +61,8 @@ print(f"r3: {r3}")
 
 v = qv_mult(r1, (0, 1, 0,))
 print(v)
-
 v = qv_mult(r2, v)
 print(v)
-
 v = qv_mult(r3, v)
 print(v)
 
@@ -79,10 +77,8 @@ r3 = axisangle_to_q(z_axis_unit, -numpy.pi / 2)
 
 v = qv_mult(r2, (1, 0, 0,))
 print(v)
-
 v = qv_mult(r1, v)
 print(v)
-
 v = qv_mult(r3, v)
 print(v)
 
