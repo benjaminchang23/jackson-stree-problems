@@ -48,6 +48,11 @@ v1 = -675, 423.318, 17.850
 
 print(qv_mult(q1, v1))
 
+q2 = -0.013868643555168, 0.006892854307608, 0.901973760745189, 0.431513017431241
+v2 = -675, 423.318, 17.850
+
+print(qv_mult(q2, v2))
+
 # A sequence of 90-degree rotations about the x, y, and z axes will return a vector on the y axis to its original position.
 x_axis_unit = (1, 0, 0)
 y_axis_unit = (0, 1, 0)
@@ -90,3 +95,15 @@ print(v)
 assert int(v[0]) == 1
 assert int(v[1]) == 0
 assert int(v[2]) == 0
+
+# A sequence of 90-degree rotations about the z axis
+r1 = axisangle_to_q(z_axis_unit, numpy.pi / 2)
+r2 = axisangle_to_q(z_axis_unit, numpy.pi / 2)
+
+print(f"r1: {r1}")
+print(f"r2: {r2}")
+
+v = qv_mult(r2, (1, 0, 0,))
+print(v)
+v = qv_mult(r1, v)
+print(v)
