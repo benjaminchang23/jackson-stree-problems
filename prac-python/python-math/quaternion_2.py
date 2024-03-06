@@ -44,6 +44,10 @@ def q_to_axisangle(q):
 def simple_vec_add(v1, v2):
     return (v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2])
 
+def print_point_pretty(p):
+    x, y, z = p
+    print(f"{x:.15f}, {y:.15f}, {z:.15f}")
+
 # imagine a robot that starts from some known position and heading
 # it does the following motions
 # 1) drives forward 1 unit and up 1 unit (y, z)
@@ -59,11 +63,16 @@ z_axis_unit = (0, 0, 1)
 robot_orientation = axisangle_to_q(z_axis_unit, -numpy.pi / 2)
 print(f"robot_orientation: {robot_orientation}")
 
-# if there is a laser mounted 1 unit above the pose center
+# if there are two lasers mounted 1 unit above the pose center
 laser_mount_position = (0, 0, 1)
 # with an orientation pointed left with the quaternion x, y, z, w
-laser_orientation = axisangle_to_q(z_axis_unit, numpy.pi / 2)
-print(f"laser_orientation: {laser_orientation}")
+laser_orientation_0 = axisangle_to_q(z_axis_unit, numpy.pi / 2)
+print(f"laser_orientation_0: {laser_orientation_0}")
+
+# with an orientation pointed right with the quaternion x, y, z, w
+laser_orientation_1 = axisangle_to_q(z_axis_unit, -numpy.pi / 2)
+print(f"laser_orientation_1: {laser_orientation_1}")
+
 # the points that the robot detects are in a 3x3 grid of points that form a square 1 unit apart
 point_list = []
 # first row
@@ -83,21 +92,26 @@ laser_position = simple_vec_add(robot_position, laser_mount_position)
 print(f"laser_position: {laser_position}")
 
 # translate the laser points to the local global pose by rotating the reverse of the orientations of the laser then robot
+count = 0
 for point in point_list:
-    laser_conj = q_conjugate(laser_orientation)
+    laser_conj = q_conjugate(laser_orientation_0)
     robot_conj = q_conjugate(robot_orientation)
     reverse_laser_reverse_robot_pt = qv_mult(robot_conj, qv_mult(laser_conj, point))
-    print(simple_vec_add(reverse_laser_reverse_robot_pt, laser_position))
+    new_point = simple_vec_add(reverse_laser_reverse_robot_pt, laser_position)
+    print_point_pretty(new_point)
+    count+=1
+    if count % 3 == 0:
+        print("------")
 
+print("------------")
 
-top_left_point = (1, 2, 3)
-(2, 2, 3)
-(3, 2, 3)
-
-(1, 2, 2)
-middle_point = (2, 2, 2)
-(3, 2, 2)
-
-(1, 2, 1)
-(2, 2, 1)
-bottom_right_point = (3, 2, 1)
+count = 0
+for point in point_list:
+    laser_conj = q_conjugate(laser_orientation_1)
+    robot_conj = q_conjugate(robot_orientation)
+    reverse_laser_reverse_robot_pt = qv_mult(robot_conj, qv_mult(laser_conj, point))
+    new_point = simple_vec_add(reverse_laser_reverse_robot_pt, laser_position)
+    print_point_pretty(new_point)
+    count+=1
+    if count % 3 == 0:
+        print("------")
