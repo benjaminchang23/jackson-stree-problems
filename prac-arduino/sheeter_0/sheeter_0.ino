@@ -99,18 +99,22 @@ AccelStepper SouthStepper(AccelStepper::DRIVER, SOUTH_STEPPER_STEP_PIN, SOUTH_ST
 AccelStepper TableStepper(AccelStepper::DRIVER, TABLE_STEPPER_STEP_PIN, TABLE_STEPPER_DIR_PIN);
 AccelStepper RollerStepper(AccelStepper::DRIVER, ROLLER_STEPPER_STEP_PIN, ROLLER_STEPPER_DIR_PIN);
 
+// positive values are cw
 void HeightCalibrationRoutine() {
+    NorthStepper.moveTo(100);
     if (LimitNorthTop.Pressed()) {
-        TableStepper.currentPosition();
+        NorthStepper.currentPosition();
+        NorthStepper.stop();
     }
     if (LimitNorthBot.Pressed()) {
-        TableStepper.currentPosition();
+        NorthStepper.currentPosition();
     }
+    SouthStepper.moveTo(100);
     if (LimitSouthTop.Pressed()) {
-        TableStepper.currentPosition();
+        SouthStepper.currentPosition();
     }
     if (LimitSouthBot.Pressed()) {
-        TableStepper.currentPosition();
+        SouthStepper.currentPosition();
     }
 }
 
