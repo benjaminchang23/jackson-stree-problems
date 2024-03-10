@@ -56,6 +56,9 @@ bool north_cw_found = false;
 bool north_ccw_found = false;
 bool south_cw_found = false;
 bool south_ccw_found = false;
+bool table_cw_found = false;
+bool table_ccw_found = false;
+
 long north_height_positions[2]; // array for calibration
 long south_height_positions[2]; // array for calibration
 long table_positions[2]; // array for table positions
@@ -140,14 +143,32 @@ void HeightCalibrationRoutine() {
     }
 }
 
+// positive values are cw
 void TableCalibrationRoutine() {
+    if (!table_cw_found)
+        TableStepper.moveTo(100);
+        TableRoller.moveTo(100);
+    elif (!table_ccw_found)
+        TableStepper.moveTo(-100);
+        TableRoller.moveTo(-100);
+    else
+        TableStepper.stop();
+
     if (LimitEast.Pressed()) {
         TableStepper.currentPosition();
         TableRoller.currentPosition();
+        TableStepper.stop();
+        TableRoller.stop();
     }
     if (LimitWest.Pressed()) {
         TableStepper.currentPosition();
         Roller.currentPosition();
+        TableStepper.stop();
+        TableRoller.stop();
+    }
+    if (table_cw_found && table_ccw_found)
+    {
+        sheeter_state = sheeter_state_t::STANDBY;
     }
 }
 
@@ -177,6 +198,10 @@ void RunStateMachine() {
     switch (sheeter_state) {
     case sheeter_state_t::ESTOP:
         Serial.println("Error");
+        NorthStepper.stop();
+        TableStepper.stop();
+        TableRoller.stop();
+        SouthStepper.stop();
         break;
     case sheeter_state_t::STANDBY:
         Serial.println("Standby");
