@@ -52,10 +52,10 @@ enum class sheeter_direction_t : uint8_t {
 // MultiStepper TableControl;
 // MultiStepper HeightControl;
 
-bool north_ccw_found = false;
 bool north_cw_found = false;
-bool south_ccw_found = false;
+bool north_ccw_found = false;
 bool south_cw_found = false;
+bool south_ccw_found = false;
 long north_height_positions[2]; // array for calibration
 long south_height_positions[2]; // array for calibration
 long table_positions[2]; // array for table positions
@@ -105,20 +105,38 @@ AccelStepper RollerStepper(AccelStepper::DRIVER, ROLLER_STEPPER_STEP_PIN, ROLLER
 
 // positive values are cw
 void HeightCalibrationRoutine() {
-    NorthStepper.moveTo(100);
+    if (!north_cw_found)
+        NorthStepper.moveTo(100);
+    elif (!north_ccw_found)
+        NorthStepper.moveTo(-100);
+    else
+        NorthStepper.stop();
+    if (!south_cw_found)
+        SouthStepper.moveTo(100);
+    elif (!south_ccw_found)
+        SouthStepper.moveTo(-100);
+    else
+        SouthStepper.stop();
+
     if (LimitNorthTop.Pressed()) {
-        NorthStepper.currentPosition();
+        north_height_positions[?] = NorthStepper.currentPosition();
         NorthStepper.stop();
     }
     if (LimitNorthBot.Pressed()) {
-        NorthStepper.currentPosition();
+        north_height_positions[?] = NorthStepper.currentPosition();
+        NorthStepper.stop();
     }
-    SouthStepper.moveTo(100);
     if (LimitSouthTop.Pressed()) {
-        SouthStepper.currentPosition();
+        south_height_positions[?] = SouthStepper.currentPosition();
+        SouthStepper.stop();
     }
     if (LimitSouthBot.Pressed()) {
-        SouthStepper.currentPosition();
+        south_height_positions[?] = SouthStepper.currentPosition();
+        SouthStepper.stop();
+    }
+    if (north_cw_found && north_ccw_found && south_cw_found && south_ccw_found)
+    {
+        sheeter_state = sheeter_state_t::CALIBRATION_EAST_WEST;
     }
 }
 
