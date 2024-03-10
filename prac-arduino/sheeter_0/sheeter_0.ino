@@ -52,6 +52,10 @@ enum class sheeter_direction_t : uint8_t {
 // MultiStepper TableControl;
 // MultiStepper HeightControl;
 
+bool north_ccw_found = false;
+bool north_cw_found = false;
+bool south_ccw_found = false;
+bool south_cw_found = false;
 long north_height_positions[2]; // array for calibration
 long south_height_positions[2]; // array for calibration
 long table_positions[2]; // array for table positions
