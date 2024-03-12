@@ -111,18 +111,24 @@ AccelStepper RollerStepper(AccelStepper::DRIVER, ROLLER_STEPPER_STEP_PIN, ROLLER
 
 // positive values are cw
 void HeightCalibrationRoutine() {
-    if (!north_cw_found)
+    if (!north_cw_found) {
         NorthStepper.moveTo(100);
-    else if (!north_ccw_found)
+    }
+    else if (!north_ccw_found) {
         NorthStepper.moveTo(-100);
-    else
+    }
+    else {
         NorthStepper.stop();
-    if (!south_cw_found)
+    }
+    if (!south_cw_found) {
         SouthStepper.moveTo(100);
-    else if (!south_ccw_found)
+    }
+    else if (!south_ccw_found) {
         SouthStepper.moveTo(-100);
-    else
+    }
+    else {
         SouthStepper.stop();
+    }
 
     if (LimitNorthTop.Pressed()) {
         north_height_positions[?] = NorthStepper.currentPosition();
@@ -140,8 +146,7 @@ void HeightCalibrationRoutine() {
         south_height_positions[?] = SouthStepper.currentPosition();
         SouthStepper.stop();
     }
-    if (north_cw_found && north_ccw_found && south_cw_found && south_ccw_found)
-    {
+    if (north_cw_found && north_ccw_found && south_cw_found && south_ccw_found) {
         sheeter_state = sheeter_state_t::CALIBRATION_EAST_WEST;
     }
 }
@@ -170,24 +175,25 @@ void TableCalibrationRoutine() {
         TableStepper.stop();
         RollerStepper.stop();
     }
-    if (table_cw_found && table_ccw_found)
-    {
+    if (table_cw_found && table_ccw_found) {
         sheeter_state = sheeter_state_t::STANDBY;
     }
 }
 
 void MoveTable(sheeter_direction_t move_dir) {
     int dir_multi = 1;
-    if (move_dir == sheeter_direction_t::EAST)
+    if (move_dir == sheeter_direction_t::EAST) {
         dir_multi = -1;
+    }
     TableStepper.moveTo(ROLLER_TO_TABLE_RATIO*dir_multi*100);
     RollerStepper.moveTo(dir_multi*100);
 }
 
 void MoveRoller(sheeter_direction_t move_dir) {
     int dir_multi = 1;
-    if (move_dir == sheeter_direction_t::DOWN)
+    if (move_dir == sheeter_direction_t::DOWN) {
         dir_multi = -1;
+    }
     NorthStepper.moveTo(dir_multi*100);
     SouthStepper.moveTo(dir_multi*100);
 }
