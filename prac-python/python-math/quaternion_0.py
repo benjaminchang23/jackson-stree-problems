@@ -2,6 +2,7 @@
 
 import math
 import numpy
+import quaternion
 
 def q_mult(q1, q2):
     x1, y1, z1, w1 = q1
@@ -52,6 +53,15 @@ q2 = -0.013868643555168, 0.006892854307608, 0.901973760745189, 0.431513017431241
 v2 = -675, 423.318, 17.850
 
 print(qv_mult(q2, v2))
+
+v3 = -675.0, 423.3, 17.7
+q3 = -0.013869, 0.006893, 0.901974, 0.431513
+
+v4 = 0.05069, -0.01712, 0.139
+q4 = 0.000698, 0.000437, 1.000000, 0.000437
+
+p1 = -10, 0, 0
+print(f"1) {qv_mult(q4, p1)}")
 
 # A sequence of 90-degree rotations about the x, y, and z axes will return a vector on the y axis to its original position.
 x_axis_unit = (1, 0, 0)
