@@ -29,6 +29,9 @@
 #define LIMIT_SOUTH_TOP_PIN 0
 #define LIMIT_SOUTH_BOT_PIN 0
 
+// roller to table ratio
+#define ROLLER_TO_TABLE_RATIO 2
+
 enum class sheeter_state_t : uint8_t {
     ESTOP,
     STANDBY,
@@ -110,13 +113,13 @@ AccelStepper RollerStepper(AccelStepper::DRIVER, ROLLER_STEPPER_STEP_PIN, ROLLER
 void HeightCalibrationRoutine() {
     if (!north_cw_found)
         NorthStepper.moveTo(100);
-    elif (!north_ccw_found)
+    else if (!north_ccw_found)
         NorthStepper.moveTo(-100);
     else
         NorthStepper.stop();
     if (!south_cw_found)
         SouthStepper.moveTo(100);
-    elif (!south_ccw_found)
+    else if (!south_ccw_found)
         SouthStepper.moveTo(-100);
     else
         SouthStepper.stop();
@@ -145,26 +148,27 @@ void HeightCalibrationRoutine() {
 
 // positive values are cw
 void TableCalibrationRoutine() {
-    if (!table_cw_found)
+    if (!table_cw_found) {
         TableStepper.moveTo(100);
-        TableRoller.moveTo(100);
-    elif (!table_ccw_found)
+        RollerStepper.moveTo(100);
+    }
+    else if (!table_ccw_found) {
         TableStepper.moveTo(-100);
-        TableRoller.moveTo(-100);
-    else
+        RollerStepper.moveTo(-100);
+    }
+    else {
         TableStepper.stop();
+    }
 
     if (LimitEast.Pressed()) {
-        TableStepper.currentPosition();
-        TableRoller.currentPosition();
+        table_positions[?] = TableStepper.currentPosition();
         TableStepper.stop();
-        TableRoller.stop();
+        RollerStepper.stop();
     }
     if (LimitWest.Pressed()) {
-        TableStepper.currentPosition();
-        Roller.currentPosition();
+        table_positions[?] = TableStepper.currentPosition();
         TableStepper.stop();
-        TableRoller.stop();
+        RollerStepper.stop();
     }
     if (table_cw_found && table_ccw_found)
     {
@@ -173,11 +177,19 @@ void TableCalibrationRoutine() {
 }
 
 void MoveTable(sheeter_direction_t move_dir) {
-
+    int dir_multi = 1;
+    if (move_dir == sheeter_direction_t::EAST)
+        dir_multi = -1;
+    TableStepper.moveTo(ROLLER_TO_TABLE_RATIO*dir_multi*100);
+    RollerStepper.moveTo(dir_multi*100);
 }
 
 void MoveRoller(sheeter_direction_t move_dir) {
-
+    int dir_multi = 1;
+    if (move_dir == sheeter_direction_t::DOWN)
+        dir_multi = -1;
+    NorthStepper.moveTo(dir_multi*100);
+    SouthStepper.moveTo(dir_multi*100);
 }
 
 void ReadButtons() {
@@ -199,9 +211,9 @@ void RunStateMachine() {
     case sheeter_state_t::ESTOP:
         Serial.println("Error");
         NorthStepper.stop();
-        TableStepper.stop();
-        TableRoller.stop();
         SouthStepper.stop();
+        TableStepper.stop();
+        RollerStepper.stop();
         break;
     case sheeter_state_t::STANDBY:
         Serial.println("Standby");
