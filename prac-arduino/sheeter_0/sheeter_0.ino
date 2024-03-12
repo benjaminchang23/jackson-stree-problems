@@ -133,19 +133,19 @@ void HeightCalibrationRoutine() {
     }
 
     if (LimitNorthTop.Pressed()) {
-        north_height_positions[?] = NorthStepper.currentPosition();
+        north_height_positions[0] = NorthStepper.currentPosition();
         NorthStepper.stop();
     }
     if (LimitNorthBot.Pressed()) {
-        north_height_positions[?] = NorthStepper.currentPosition();
+        north_height_positions[1] = NorthStepper.currentPosition();
         NorthStepper.stop();
     }
     if (LimitSouthTop.Pressed()) {
-        south_height_positions[?] = SouthStepper.currentPosition();
+        south_height_positions[0] = SouthStepper.currentPosition();
         SouthStepper.stop();
     }
     if (LimitSouthBot.Pressed()) {
-        south_height_positions[?] = SouthStepper.currentPosition();
+        south_height_positions[1] = SouthStepper.currentPosition();
         SouthStepper.stop();
     }
     if (north_cw_found && north_ccw_found && south_cw_found && south_ccw_found) {
@@ -168,12 +168,12 @@ void TableCalibrationRoutine() {
     }
 
     if (LimitEast.Pressed()) {
-        table_positions[?] = TableStepper.currentPosition();
+        table_positions[0] = TableStepper.currentPosition();
         TableStepper.stop();
         RollerStepper.stop();
     }
     if (LimitWest.Pressed()) {
-        table_positions[?] = TableStepper.currentPosition();
+        table_positions[1] = TableStepper.currentPosition();
         TableStepper.stop();
         RollerStepper.stop();
     }
