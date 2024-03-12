@@ -55,6 +55,8 @@ enum class sheeter_direction_t : uint8_t {
 // MultiStepper TableControl;
 // MultiStepper HeightControl;
 
+bool ready = true;
+
 bool north_cw_found = false;
 bool north_ccw_found = false;
 bool south_cw_found = false;
@@ -203,6 +205,7 @@ void ReadButtons() {
     ControlWest.Read();
     ControlUp.Read();
     ControlDown.Read();
+    ControlCalibration.Read();
 
     LimitEast.Read();
     LimitWest.Read();
@@ -210,6 +213,28 @@ void ReadButtons() {
     LimitNorthBot.Read();
     LimitSouthTop.Read();
     LimitSouthBot.Read();
+
+    if (!ready)
+        return;
+
+    if (ControlEast.Pressed()) {
+        sheeter_state = sheeter_state_t::SHEET_EAST;
+    }
+    else if (ControlWest.Pressed()) {
+        sheeter_state = sheeter_state_t::SHEET_WEST;
+    }
+    else if (ControlUp.Pressed()) {
+        sheeter_state = sheeter_state_t::RAISE;
+    }
+    else if (ControlDown.Pressed()) {
+        sheeter_state = sheeter_state_t::LOWER;
+    }
+    else if (ControlCalibration.Pressed()) {
+        sheeter_state = sheeter_state_t::LOWER;
+    }
+    else {
+
+    }
 }
 
 void RunStateMachine() {
