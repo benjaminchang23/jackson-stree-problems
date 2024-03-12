@@ -114,19 +114,19 @@ AccelStepper RollerStepper(AccelStepper::DRIVER, ROLLER_STEPPER_STEP_PIN, ROLLER
 // positive values are cw
 void HeightCalibrationRoutine() {
     if (!north_cw_found) {
-        NorthStepper.moveTo(100);
+        NorthStepper.move(100);
     }
     else if (!north_ccw_found) {
-        NorthStepper.moveTo(-100);
+        NorthStepper.move(-100);
     }
     else {
         NorthStepper.stop();
     }
     if (!south_cw_found) {
-        SouthStepper.moveTo(100);
+        SouthStepper.move(100);
     }
     else if (!south_ccw_found) {
-        SouthStepper.moveTo(-100);
+        SouthStepper.move(-100);
     }
     else {
         SouthStepper.stop();
@@ -156,12 +156,12 @@ void HeightCalibrationRoutine() {
 // positive values are cw
 void TableCalibrationRoutine() {
     if (!table_cw_found) {
-        TableStepper.moveTo(100);
-        RollerStepper.moveTo(100);
+        TableStepper.move(100);
+        RollerStepper.move(100);
     }
     else if (!table_ccw_found) {
-        TableStepper.moveTo(-100);
-        RollerStepper.moveTo(-100);
+        TableStepper.move(-100);
+        RollerStepper.move(-100);
     }
     else {
         TableStepper.stop();
@@ -187,8 +187,8 @@ void MoveTable(sheeter_direction_t move_dir) {
     if (move_dir == sheeter_direction_t::EAST) {
         dir_multi = -1;
     }
-    TableStepper.moveTo(ROLLER_TO_TABLE_RATIO*dir_multi*100);
-    RollerStepper.moveTo(dir_multi*100);
+    TableStepper.move(ROLLER_TO_TABLE_RATIO*dir_multi*100);
+    RollerStepper.move(dir_multi*100);
 }
 
 void MoveRoller(sheeter_direction_t move_dir) {
@@ -196,8 +196,8 @@ void MoveRoller(sheeter_direction_t move_dir) {
     if (move_dir == sheeter_direction_t::DOWN) {
         dir_multi = -1;
     }
-    NorthStepper.moveTo(dir_multi*100);
-    SouthStepper.moveTo(dir_multi*100);
+    NorthStepper.move(dir_multi*100);
+    SouthStepper.move(dir_multi*100);
 }
 
 void ReadButtons() {
