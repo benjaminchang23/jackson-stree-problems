@@ -233,7 +233,27 @@ void ReadButtons() {
         sheeter_state = sheeter_state_t::LOWER;
     }
     else {
+    }
 
+    if (LimitEast.Pressed()) {
+        sheeter_state = sheeter_state_t::STANDBY;
+    }
+    else if (LimitWest.Pressed()) {
+        sheeter_state = sheeter_state_t::STANDBY;
+    }
+    else if (LimitNorthTop.Pressed()) {
+        sheeter_state = sheeter_state_t::STANDBY;
+    }
+    else if (LimitNorthBot.Pressed()) {
+        sheeter_state = sheeter_state_t::STANDBY;
+    }
+    else if (LimitSouthTop.Pressed()) {
+        sheeter_state = sheeter_state_t::STANDBY;
+    }
+    else if (LimitSouthBot.Pressed()) {
+        sheeter_state = sheeter_state_t::STANDBY;
+    }
+    else {
     }
 }
 
