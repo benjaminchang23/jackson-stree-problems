@@ -87,6 +87,8 @@ int GetConfig(char *filename)
         return -1;
     }
     std::cout << "key: " << target_key_1 << " - value: " << config[target_key_1] << std::endl;
+
+    return 0;
 }
 
 int main(int argc, char *argv[])
