@@ -38,10 +38,10 @@ int main()
 
     njson widget_list_json {};
 
-    njson widget_0_json { widget_0 };
-    njson widget_1_json { widget_1 };
-    njson widget_2_json { widget_2 };
-    njson widget_3_json { widget_3 };
+    njson widget_0_json = widget_0;
+    njson widget_1_json = widget_1;
+    njson widget_2_json = widget_2;
+    njson widget_3_json = widget_3;
 
     widget_list_json.emplace_back(widget_0);
     widget_list_json.emplace_back(widget_1);
