@@ -33,10 +33,26 @@ void to_json(njson &j, const Widget &widget)
 
 int main()
 {
-    std::string s = "[\"nlohmann\", \"json\"]";
-    njson second = njson::parse(s);
-    std::cout << second.dump() << std::endl;
-    njson test_0 = { };
+    std::string s1 = "[\"nlohmann\", \"json\"]";
+    std::string s2 = "{\"nlohmann\": \"json\", \"foo\": 1, \"bar\": 1}";
+
+    try
+    {
+        njson first = njson::parse(s1);
+        njson second = njson::parse(s2);
+
+        if (second.contains("bar"))
+        {
+            std::cout << "I see bar" << std::endl;
+        }
+
+        std::cout << first.dump() << std::endl;
+        std::cout << second.dump() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 
     return 0;
 }
