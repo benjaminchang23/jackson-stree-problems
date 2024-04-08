@@ -43,7 +43,8 @@ int main()
 
         if (second.contains("bar"))
         {
-            std::cout << "I see bar" << std::endl;
+            size_t bar_val = second["bar"];
+            std::cout << "I see bar as: " << bar_val << std::endl;
         }
 
         std::cout << first.dump() << std::endl;
