@@ -17,3 +17,4 @@ def outer_dec(func):
 @outer_dec
 def print_hello(print_str: str):
     print(print_str)
+
