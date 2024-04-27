@@ -10,3 +10,5 @@ print(split_contents)
 
 last_slash_index = bar.rfind("/")
 print(bar[:last_slash_index])
+
+print(bar[last_slash_index + 1:])
