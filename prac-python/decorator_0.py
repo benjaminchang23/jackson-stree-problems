@@ -3,7 +3,7 @@ def inner_dec(func):
         print("inner dec before")
         func(*args, **kwargs)
         print("inner dec after")
-    return inner_func(func)
+    return inner_func
 
 
 def outer_dec(func):
@@ -11,10 +11,11 @@ def outer_dec(func):
         print("outer dec before")
         func(*args, **kwargs)
         print("outer dec after")
-    return inner_func(func)
+    return inner_func
 
 @inner_dec
 @outer_dec
 def print_hello(print_str: str):
     print(print_str)
 
+print_hello("big")
