@@ -10,4 +10,4 @@ def make_pretty(func):
 def ordinary():
     print("I am ordinary")
 
-ordinary()  
+ordinary()
