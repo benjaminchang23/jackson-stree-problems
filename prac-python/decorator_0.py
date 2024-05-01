@@ -1,16 +1,16 @@
 def inner_dec(func):
     def inner_func(*args, **kwargs):
-        print("inner dec before")
+        print(f"inner dec before {args} {kwargs}")
         func(*args, **kwargs)
-        print("inner dec after")
+        print(f"inner dec after {args} {kwargs}")
     return inner_func
 
 
 def outer_dec(func):
     def inner_func(*args, **kwargs):
-        print("outer dec before")
+        print(f"outer dec before {args} {kwargs}")
         func(*args, **kwargs)
-        print("outer dec after")
+        print(f"outer dec after {args} {kwargs}")
     return inner_func
 
 @inner_dec
@@ -18,4 +18,4 @@ def outer_dec(func):
 def print_hello(print_str: str):
     print(print_str)
 
-print_hello("big")
+print_hello("foo")
