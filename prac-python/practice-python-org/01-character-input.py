@@ -13,9 +13,11 @@
 
 from datetime import datetime
 
+
 def print_help():
     print("please input your first name and birthday (YYYY-MM-DD)")
     print("enter exit or quit to stop the application")
+
 
 def main():
     done: bool = False
@@ -41,6 +43,7 @@ def main():
         hundred_date = date.replace(year=date.year + 100)
         print(f"Hello {name}, you will turn 100 on {hundred_date}")
         done = True
+
 
 if __name__ == "__main__":
     main()
