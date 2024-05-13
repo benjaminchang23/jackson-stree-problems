@@ -24,7 +24,7 @@ def main():
     print_game_start()
     while not done:
         try:
-            echo = input()
+            echo: str = input()
         except Exception as e:
             print(f"error: {e}")
             return

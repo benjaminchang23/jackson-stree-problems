@@ -24,7 +24,7 @@ def main():
     while not done:
         print_help()
         try:
-            echo = input()
+            echo: str = input()
         except Exception as e:
             print(f"error: {e}")
             return

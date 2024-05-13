@@ -14,7 +14,7 @@
 def main():
     print("Please input an odd or even integer. Alternatively, input two integers x and y to check if x divides evenly into y. ")
     try:
-        echo = input()
+        echo: str = input()
     except Exception as e:
         print(f"error: {e}")
         return

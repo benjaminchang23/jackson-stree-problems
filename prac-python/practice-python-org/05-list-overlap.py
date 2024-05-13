@@ -31,7 +31,7 @@ def list_comp_sol(list_0: List, list_1: List) -> List:
 def main():
     print("enter a max value as an integer for the random list generator and an integer for the max random list size")
     try:
-        echo = input()
+        echo: str = input()
     except Exception as e:
         print(f"error: {e}")
         return
