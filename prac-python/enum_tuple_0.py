@@ -31,12 +31,18 @@ tuple_0 = ("one", 1, MyEnum.first)
 print(tuple_0)
 print(tuple_0[0])
 
-print(enum_to_str_name(MyEnum.first))
-print(enum_to_str_value(MyEnum.first))
+print(MyEnum.second.value)
 
-print(str_to_enum("first"))
-print(str_to_enum_name("first"))
-print(str_to_enum_value("first"))
+print(f"enum_to_str_name: {enum_to_str_name(MyEnum.first)}")
+print(f"enum_to_str_value: {enum_to_str_value(MyEnum.first)}")
+
+print()
+
+print(f"str_to_enum: {str_to_enum('first')}")
+print(f"str_to_enum_name: {str_to_enum_name('first')}")
+print(f"str_to_enum_value: {str_to_enum_value('first')}")
+
+print()
 
 try:
     print(str_to_enum("First"))
