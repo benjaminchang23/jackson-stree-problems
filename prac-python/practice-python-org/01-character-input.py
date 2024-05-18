@@ -12,6 +12,7 @@
 #       (Hint: the string "\n is the same as pressing the ENTER button)
 
 from datetime import datetime
+from typing import List
 
 
 def print_help():
@@ -31,7 +32,7 @@ def main():
         print(f"recieved {echo}")
         if echo == "exit" or echo == "quit":
             return
-        split_str: str = echo.split(" ")
+        split_str: List[str] = echo.split(" ")
         if len(split_str) != 2:
             continue
         name = split_str[0]
