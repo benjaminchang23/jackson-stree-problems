@@ -11,30 +11,35 @@ from typing import Any, List
 
 def find_element_binary(my_list: List, ele: Any):
     found: bool = False
-    start_index: int = 1
+    start_index: int = 0
     end_index: int = len(my_list) - 1
 
     if not ele or not my_list:
         print(f"Found: {found}")
         return found
 
-    if ele > my_list[end_index] or ele < my_list[start_index]:
-        print(f"Found: {found}")
-        return found
-
     while not found:
-        index: int = int((end_index - start_index)/2) + start_index
-        print(f"index: {index} {(end_index - start_index)/2}")
-        break
-        check = my_list[index]
+        check_index: int = int((end_index - start_index)/2) + start_index
+        check = my_list[check_index]
+
+        # print(f"check_index: {check_index} val: {check} ele: {ele} start: {start_index} end: {end_index}")
+
+        if check_index < start_index or check_index > end_index:
+            print(f"Found: {found} {check_index}")
+            return found
+
+        if end_index - start_index == 1:
+            found = my_list[start_index] == ele or my_list[end_index] == ele
+            return found
+
         if check < ele:
-            end_index = index
+            start_index = check_index
         elif check > ele:
-            start_index = index
+            end_index = check_index
         elif check == ele:
             found = True
         else:
-            raise ValueError(f"Could not eval: {check} - {my_list[index]}")
+            raise ValueError(f"Could not eval: {check} - {my_list[check_index]}")
 
     print(f"Found: {found}")
     return found
@@ -72,8 +77,8 @@ def main():
 
     print("------")
 
-    # assert find_element_binary(list_0, None) == False
-    # assert find_element_binary(list_1, 1) == True
+    assert find_element_binary(list_0, None) == False
+    assert find_element_binary(list_1, 1) == True
     assert find_element_binary(list_2, 2) == True
     assert find_element_binary(list_3, 2) == True
     assert find_element_binary(list_4, 4) == False
