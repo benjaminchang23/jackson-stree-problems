@@ -1,11 +1,8 @@
 import datetime
 
-# get date string
-today = datetime.date.today()
-print(today)
 
-def daily_task():
-    today = datetime.date.today()
+def daily_task(today: datetime.date):
+    print(today)
     print(today.weekday())
     if today.weekday() in [1, 2]: # 1 corresponds to Tuesday, 2 corresponds to Wednesday
         print("correct weekday")
@@ -20,4 +17,17 @@ def daily_task():
                     mentions += "<@" + user_id + "> "
                 print("Street cleanup is tomorrow!")
 
-daily_task()
+
+def week_check(datetime_today: datetime.date):
+    week_of_month = (datetime_today.day - 1) // 7 + 1
+    print(week_of_month)
+
+def main():
+    today = datetime.date.today()
+    daily_task(today)
+    print()
+    week_check(today)
+
+
+if __name__ == "__main__":
+    main()
