@@ -7,6 +7,7 @@ list_3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 list_4 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 list_5 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
 list_6 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+list_7 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
 
 def chop(input_list: List, divider: int):
@@ -15,10 +16,10 @@ def chop(input_list: List, divider: int):
     total: Optional[int] = None 
     modulo = len(input_list) % divider
     integer_divide = len(input_list) // divider
-    ten_per_divider = divider / 10
+    ten_per_divider = max(int(divider / 10), 1)
     print(f"modulo: {modulo}")
     print(f"integer_div: {integer_divide}")
-    # print(f"ten_per_divider: {ten_per_divider}")
+    print(f"ten_per_divider: {ten_per_divider}")
     total = integer_divide
     if modulo != 0:
         if modulo > ten_per_divider:
@@ -29,7 +30,7 @@ def chop(input_list: List, divider: int):
         if early_exit:
             break
         end_index = (x + 1) * divider
-        # print(f"end_index: {end_index} {len(input_list)}")
+        print(f"end_index: {end_index} {len(input_list)}")
         compare = abs(len(input_list) - end_index)
         if compare <= ten_per_divider and compare != 0:
             end_index = len(input_list)
@@ -70,3 +71,7 @@ assert lists == [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17, 1
 result, lists = chop(list_6, 10)
 assert result == 3
 assert lists == [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], [21, 22]]
+
+result, lists = chop(list_7, 7)
+assert result == 4
+assert lists == [[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14], [15, 16, 17, 18, 19, 20, 21], [22, 23]]
