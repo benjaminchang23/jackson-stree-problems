@@ -1,4 +1,13 @@
 import datetime
+from typing import List
+
+def generate_may():
+    may_list: List[datetime.date] = []
+
+    for x in range(1, 31 + 1):
+        may_list.append(datetime.datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y"))
+
+    return may_list
 
 
 def daily_task(today: datetime.date):
@@ -25,6 +34,8 @@ def week_calc(day: int):
 def week_check(datetime_today: datetime.date):
     week_of_month = week_calc(datetime_today.day)
     print(week_of_month)
+    return week_of_month
+
 
 def main():
     today = datetime.date.today()
@@ -32,6 +43,11 @@ def main():
     print()
     week_check(today)
     print(week_calc(7))
+    print()
+
+    may_datetimes = generate_may()
+    for may_datetime in may_datetimes:
+        print(may_datetime)
 
 
 if __name__ == "__main__":
