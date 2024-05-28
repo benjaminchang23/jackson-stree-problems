@@ -1,6 +1,21 @@
 import datetime
-from typing import List
+from typing import Dict
 
+
+
+# april 2024 starts on a monday
+def generate_april():
+    april_dict: Dict = {}
+
+    for x in range(1, 30 + 1):
+        if x >= 1 and x <= 6:
+            week_num = 1
+        april_dict[datetime.datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
+
+    return april_dict
+
+
+# may 2024 starts on a wednesday
 def generate_may():
     may_list: List[datetime.date] = []
 
@@ -8,6 +23,26 @@ def generate_may():
         may_list.append(datetime.datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y"))
 
     return may_list
+
+
+# june 2024 starts on a friday
+def generate_june_2024():
+    june_list: List[datetime.date] = []
+
+    for x in range(1, 30 + 1):
+        june_list.append(datetime.datetime.strptime("06/" + str(x) + "/2024", "%m/%d/%Y"))
+
+    return june_list
+
+
+# june 2025 starts on a sunday
+def generate_june_2025():
+    june_list: List[datetime.date] = []
+
+    for x in range(1, 30 + 1):
+        june_list.append(datetime.datetime.strptime("06/" + str(x) + "/2025", "%m/%d/%Y"))
+
+    return june_list
 
 
 def daily_task(today: datetime.date):
@@ -48,6 +83,7 @@ def main():
     may_datetimes = generate_may()
     for may_datetime in may_datetimes:
         print(may_datetime)
+        print(week_calc(may_datetime.day))
 
 
 if __name__ == "__main__":
