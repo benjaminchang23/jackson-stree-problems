@@ -7,44 +7,88 @@ from typing import Dict
 
 # april 2024 starts on a monday
 def generate_april_2024():
-    april_dict: Dict = {}
+    april_2024_dict: Dict = {}
 
     for x in range(1, 30 + 1):
+        week_num: int = 0
         if x >= 1 and x <= 6:
             week_num = 1
-        april_dict[datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
+        elif x >= 7 and x <= 13:
+            week_num = 2
+        elif x >= 14 and x <= 20:
+            week_num = 3
+        elif x >= 21 and x <= 27:
+            week_num = 4
+        elif x >= 28:
+            week_num = 5
+        april_2024_dict[datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
 
-    return april_dict
+    return april_2024_dict
 
 
 # may 2024 starts on a wednesday
 def generate_may_2024():
-    may_list: List[dt.date] = []
+    may_2024_dict: Dict = {}
 
     for x in range(1, 31 + 1):
-        may_list.append(datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y"))
+        week_num: int = 0
+        if x >= 1 and x <= 4:
+            week_num = 1
+        elif x >= 5 and x <= 11:
+            week_num = 2
+        elif x >= 12 and x <= 18:
+            week_num = 3
+        elif x >= 19 and x <= 25:
+            week_num = 4
+        elif x >= 26:
+            week_num = 5
+        may_2024_dict[datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
 
-    return may_list
+    return may_2024_dict
 
 
 # june 2024 starts on a friday
 def generate_june_2024():
-    june_list: List[date] = []
+    june_2024_dict: Dict = {}
 
     for x in range(1, 30 + 1):
-        june_list.append(datetime.strptime("06/" + str(x) + "/2024", "%m/%d/%Y"))
+        week_num: int = 0
+        if x >= 1 and x <= 1:
+            week_num = 1
+        elif x >= 2 and x <= 8:
+            week_num = 2
+        elif x >= 9 and x <= 15:
+            week_num = 3
+        elif x >= 16 and x <= 22:
+            week_num = 4
+        elif x >= 23 and x <= 29:
+            week_num = 5
+        elif x >= 30:
+            week_num = 6
+        june_2024_dict[datetime.strptime("06/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
 
-    return june_list
+    return june_2024_dict
 
 
 # june 2025 starts on a sunday
 def generate_june_2025():
-    june_list: List[date] = []
+    june_2025_dict: Dict = {}
 
     for x in range(1, 30 + 1):
-        june_list.append(dt.datetime.strptime("06/" + str(x) + "/2025", "%m/%d/%Y"))
+        week_num: int = 0
+        if x >= 1 and x <= 7:
+            week_num = 1
+        elif x >= 8 and x <= 14:
+            week_num = 2
+        elif x >= 15 and x <= 21:
+            week_num = 3
+        elif x >= 22 and x <= 28:
+            week_num = 4
+        elif x >= 29:
+            week_num = 5
+        june_2025_dict[datetime.strptime("06/" + str(x) + "/2025", "%m/%d/%Y")] = week_num
 
-    return june_list
+    return june_2025_dict
 
 
 def daily_task(today: date):
