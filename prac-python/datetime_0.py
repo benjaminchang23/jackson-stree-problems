@@ -1,5 +1,6 @@
-from datetime import datetime, date
 from calendar import Calendar
+from datetime import datetime, date
+from math import ceil
 from typing import Dict
 
 
@@ -63,7 +64,7 @@ def daily_task(today: date):
                 print("Street cleanup is tomorrow!")
 
 
-def week_calc(datetime_today: date):
+def week_calc_calendar(datetime_today: date):
     # for a week starting on sunday like a calendar
     cal = Calendar(6)
     weeks = cal.monthdayscalendar(datetime_today.year, datetime_today.month)
@@ -72,10 +73,19 @@ def week_calc(datetime_today: date):
             return x + 1
 
 
+def week_calc_math(datetime_today: date):
+    first_day = datetime_today.replace(day=1)
+    dom = datetime_today.day
+    adjusted_dom = dom + first_day.weekday()
+
+    return int(ceil(adjusted_dom/7.0))
+
+
 def week_check(datetime_today: date):
-    week_of_month = week_calc(datetime_today)
-    print(week_of_month)
-    return week_of_month
+    week_of_month_cal = week_calc_calendar(datetime_today)
+    week_of_month_math = week_calc_math(datetime_today)
+    assert week_of_month_cal == week_of_month_math
+    return week_of_month_cal
 
 
 def main():
@@ -87,7 +97,7 @@ def main():
 
     may_2024_datetimes = generate_may_2024()
     for may_2024_datetime in may_2024_datetimes:
-        print(week_calc(may_2024_datetime))
+        print(week_calc_calendar(may_2024_datetime))
 
 
 if __name__ == "__main__":
