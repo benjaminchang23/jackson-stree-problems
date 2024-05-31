@@ -4,7 +4,6 @@ from math import ceil
 from typing import Dict
 
 
-
 # april 2024 starts on a monday
 def generate_april_2024():
     april_2024_dict: Dict = {}
@@ -21,7 +20,7 @@ def generate_april_2024():
             week_num = 4
         elif x >= 28:
             week_num = 5
-        april_2024_dict[datetime.strptime("05/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
+        april_2024_dict[datetime.strptime("04/" + str(x) + "/2024", "%m/%d/%Y")] = week_num
 
     return april_2024_dict
 
@@ -132,16 +131,27 @@ def week_check(datetime_today: date):
     return week_of_month_cal
 
 
+def check_week_dict(month_dict: Dict):
+    for day_datetime in month_dict:
+        week_num: int = week_calc_calendar(day_datetime)
+        assert week_num == month_dict.get(day_datetime), f"{day_datetime} {week_num} {month_dict.get(day_datetime)}"
+
+
 def main():
     today = date.today()
     daily_task(today)
     print()
     week_check(today)
-    print()
 
+    april_2024_datetimes = generate_april_2024()
     may_2024_datetimes = generate_may_2024()
-    for may_2024_datetime in may_2024_datetimes:
-        print(week_calc_calendar(may_2024_datetime))
+    june_2024_datetimes = generate_june_2024()
+    june_2025_datetimes = generate_june_2025()
+
+    check_week_dict(april_2024_datetimes)
+    check_week_dict(may_2024_datetimes)
+    check_week_dict(june_2024_datetimes)
+    check_week_dict(june_2025_datetimes)
 
 
 if __name__ == "__main__":
