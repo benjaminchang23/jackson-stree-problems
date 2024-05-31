@@ -1,7 +1,7 @@
 from calendar import Calendar
 from datetime import datetime, date
 from math import ceil
-from typing import Dict
+from typing import Dict, List
 
 
 # april 2024 starts on a monday
@@ -119,7 +119,7 @@ def week_calc_calendar(datetime_today: date):
 def week_calc_math(datetime_today: date):
     first_day = datetime_today.replace(day=1)
     dom = datetime_today.day
-    adjusted_dom = dom + first_day.weekday()
+    adjusted_dom = dom + (1 + first_day.weekday()) % 7
 
     return int(ceil(adjusted_dom/7.0))
 
@@ -127,13 +127,13 @@ def week_calc_math(datetime_today: date):
 def week_check(datetime_today: date):
     week_of_month_cal = week_calc_calendar(datetime_today)
     week_of_month_math = week_calc_math(datetime_today)
-    assert week_of_month_cal == week_of_month_math
+    assert week_of_month_cal == week_of_month_math, f"{datetime_today} cal: {week_of_month_cal} math: {week_of_month_math}"
     return week_of_month_cal
 
 
 def check_week_dict(month_dict: Dict):
     for day_datetime in month_dict:
-        week_num: int = week_calc_calendar(day_datetime)
+        week_num: int = week_check(day_datetime)
         assert week_num == month_dict.get(day_datetime), f"{day_datetime} {week_num} {month_dict.get(day_datetime)}"
 
 
