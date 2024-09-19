@@ -13,3 +13,8 @@ if not obj3:
     print("not obj3")
 if not obj4:
     print("not obj4")
+
+if obj2 is not None:
+    print("obj2")
+else:
+    print("not obj2")

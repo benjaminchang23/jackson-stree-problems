@@ -11,3 +11,11 @@ list_1 = [["one1", "two2"], ["three4", "four3"]]
 for ele in list_0:
     if [ele["one"], ele["two"]] in list_1:
         print(ele)
+
+print("adding a dict rep to a list of str")
+
+unknown_values = ["unknown0", "unknown1"]
+
+dict_2 = {"known-key": unknown_values}
+
+print(dict_2.__str__())
